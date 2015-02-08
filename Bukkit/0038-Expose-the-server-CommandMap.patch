@@ -1,14 +1,14 @@
-From f2329cee0c7019434a1b52646d42aa7e5e2ede29 Mon Sep 17 00:00:00 2001
+From e199c2c3db3089c0af116dd75837069876e4182a Mon Sep 17 00:00:00 2001
 From: Jedediah Smith <jedediah@silencegreys.com>
 Date: Wed, 29 Oct 2014 19:08:55 -0400
 Subject: [PATCH] Expose the server CommandMap
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 0ddc9c4..7f6c0c0 100644
+index 49073a8..a0512e5 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -12,6 +12,7 @@ import java.util.logging.Logger;
+@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  
  import org.bukkit.Warning.WarningState;
  import org.bukkit.command.CommandException;
@@ -16,7 +16,7 @@ index 0ddc9c4..7f6c0c0 100644
  import org.bukkit.command.CommandSender;
  import org.bukkit.command.ConsoleCommandSender;
  import org.bukkit.command.PluginCommand;
-@@ -644,6 +645,13 @@ public final class Bukkit {
+@@ -949,6 +950,13 @@ public final class Bukkit {
      }
  
      /**
@@ -27,11 +27,11 @@ index 0ddc9c4..7f6c0c0 100644
 +    }
 +
 +    /**
-      * @see Server#getMonsterSpawnLimit()
-      */
-     public static int getMonsterSpawnLimit() {
+      * Gets user-specified limit for number of monsters that can spawn in a
+      * chunk.
+      *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e99005f..999a034 100644
+index b88e722..deabd5e 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -14,6 +14,7 @@ import java.util.logging.Logger;

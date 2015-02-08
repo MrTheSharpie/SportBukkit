@@ -1,4 +1,4 @@
-From 9b521f1cdbc54d7104bb6fd36ce49159225acc6f Mon Sep 17 00:00:00 2001
+From 8270b30ba7da32dbee6bcc7febf9bfad30e4b5c4 Mon Sep 17 00:00:00 2001
 From: mrapple <tony@oc.tc>
 Date: Mon, 1 Sep 2014 00:34:00 -0500
 Subject: [PATCH] Snapshot protocol
@@ -52,10 +52,10 @@ index 0000000..0df20f6
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index c4cd0d7..fbe28f0 100644
+index d8e36d0..17e038f 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1162,4 +1162,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1164,4 +1164,13 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
       * @return The locale
       */
      public String getLocale();
@@ -71,5 +71,5 @@ index c4cd0d7..fbe28f0 100644
 +    // XimeBukkit end
 +}
 -- 
-1.8.4.msysgit.0
+1.9.0
 

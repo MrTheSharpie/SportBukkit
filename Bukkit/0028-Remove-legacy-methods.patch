@@ -1,23 +1,25 @@
-From e698507ea4782fea756ee0af639ea74d625562ec Mon Sep 17 00:00:00 2001
+From d94b28b0de7b775a431b69972dae3c2fb21587da Mon Sep 17 00:00:00 2001
 From: Jedediah Smith <jedediah@silencegreys.com>
 Date: Thu, 21 Aug 2014 02:22:28 -0400
 Subject: [PATCH] Remove legacy methods
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 447eef6..0ddc9c4 100644
+index a5d097b..49073a8 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -91,19 +91,6 @@ public final class Bukkit {
+@@ -105,21 +105,6 @@ public final class Bukkit {
      }
  
      /**
+-     * Gets an array copy of all currently logged in players.
+-     * <p>
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
 -     *
--     * @Deprecated
--     * @see Server#_INVALID_getOnlinePlayers()
+-     * @deprecated superseded by {@link #getOnlinePlayers()}
+-     * @return an array of Players that are currently online
 -     */
 -    @Deprecated
 -    public static Player[] _INVALID_getOnlinePlayers() {
@@ -25,11 +27,11 @@ index 447eef6..0ddc9c4 100644
 -    }
 -
 -    /**
-      * @see Server#getOnlinePlayers()
-      */
-     public static Collection<? extends Player> getOnlinePlayers() {
+      * Gets a view of all currently logged in players. This {@linkplain
+      * Collections#unmodifiableCollection(Collection) view} is a reused
+      * object, making some operations like {@link Collection#size()}
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index b4f0c18..e99005f 100644
+index 81f2635..b88e722 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -85,19 +85,6 @@ public interface Server extends PluginMessageRecipient {
@@ -42,7 +44,7 @@ index b4f0c18..e99005f 100644
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
 -     *
--     * @Deprecated superseded by {@link #getOnlinePlayers()}
+-     * @deprecated superseded by {@link #getOnlinePlayers()}
 -     * @return an array of Players that are currently online
 -     */
 -    @Deprecated
@@ -53,16 +55,18 @@ index b4f0c18..e99005f 100644
       * Collections#unmodifiableCollection(Collection) view} is a reused
       * object, making some operations like {@link Collection#size()}
 diff --git a/src/main/java/org/bukkit/entity/Damageable.java b/src/main/java/org/bukkit/entity/Damageable.java
-index 53877a8..0735b02 100644
+index d0599cf..ded9250 100644
 --- a/src/main/java/org/bukkit/entity/Damageable.java
 +++ b/src/main/java/org/bukkit/entity/Damageable.java
-@@ -12,14 +12,6 @@ public interface Damageable extends Entity {
+@@ -12,16 +12,6 @@ public interface Damageable extends Entity {
      void damage(double amount);
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @param amount Amount of damage to deal
 -     */
 -    @Deprecated
 -    void _INVALID_damage(int amount);
@@ -71,13 +75,16 @@ index 53877a8..0735b02 100644
       * Deals the given amount of damage to this entity, from a specified
       * entity.
       *
-@@ -29,14 +21,6 @@ public interface Damageable extends Entity {
+@@ -31,17 +21,6 @@ public interface Damageable extends Entity {
      void damage(double amount, Entity source);
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @param amount Amount of damage to deal
+-     * @param source Entity which to attribute this damage from
 -     */
 -    @Deprecated
 -    void _INVALID_damage(int amount, Entity source);
@@ -86,13 +93,15 @@ index 53877a8..0735b02 100644
       * Gets the entity's health from 0 to {@link #getMaxHealth()}, where 0 is dead.
       *
       * @return Health represented from 0 to max
-@@ -44,14 +28,6 @@ public interface Damageable extends Entity {
+@@ -49,16 +28,6 @@ public interface Damageable extends Entity {
      double getHealth();
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @return Health represented from 0 to max
 -     */
 -    @Deprecated
 -    int _INVALID_getHealth();
@@ -101,13 +110,17 @@ index 53877a8..0735b02 100644
       * Sets the entity's health from 0 to {@link #getMaxHealth()}, where 0 is
       * dead.
       *
-@@ -62,14 +38,6 @@ public interface Damageable extends Entity {
+@@ -69,18 +38,6 @@ public interface Damageable extends Entity {
      void setHealth(double health);
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @param health New health represented from 0 to max
+-     * @throws IllegalArgumentException Thrown if the health is {@literal < 0 or >}
+-     *     {@link #getMaxHealth()}
 -     */
 -    @Deprecated
 -    void _INVALID_setHealth(int health);
@@ -116,13 +129,15 @@ index 53877a8..0735b02 100644
       * Gets the maximum health this entity has.
       *
       * @return Maximum health
-@@ -77,14 +45,6 @@ public interface Damageable extends Entity {
+@@ -88,16 +45,6 @@ public interface Damageable extends Entity {
      double getMaxHealth();
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @return Maximum health
 -     */
 -    @Deprecated
 -    int _INVALID_getMaxHealth();
@@ -131,13 +146,15 @@ index 53877a8..0735b02 100644
       * Sets the maximum health this entity can have.
       * <p>
       * If the health of the entity is above the value provided it will be set
-@@ -98,14 +58,6 @@ public interface Damageable extends Entity {
+@@ -111,16 +58,6 @@ public interface Damageable extends Entity {
      void setMaxHealth(double health);
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @param health amount of health to set the maximum to
 -     */
 -    @Deprecated
 -    void _INVALID_setMaxHealth(int health);
@@ -147,16 +164,18 @@ index 53877a8..0735b02 100644
       */
      void resetMaxHealth();
 diff --git a/src/main/java/org/bukkit/entity/LivingEntity.java b/src/main/java/org/bukkit/entity/LivingEntity.java
-index a822607..7ac2c3a 100644
+index 9103882..4b0c7a0 100644
 --- a/src/main/java/org/bukkit/entity/LivingEntity.java
 +++ b/src/main/java/org/bukkit/entity/LivingEntity.java
-@@ -171,14 +171,6 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
+@@ -171,16 +171,6 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      public double getLastDamage();
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @return damage taken since the last no damage ticks time period
 -     */
 -    @Deprecated
 -    public int _INVALID_getLastDamage();
@@ -165,13 +184,15 @@ index a822607..7ac2c3a 100644
       * Sets the damage dealt within the current no damage ticks time period.
       *
       * @param damage amount of damage
-@@ -186,14 +178,6 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
+@@ -188,16 +178,6 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      public void setLastDamage(double damage);
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @param damage amount of damage
 -     */
 -    @Deprecated
 -    public void _INVALID_setLastDamage(int damage);
@@ -181,16 +202,18 @@ index a822607..7ac2c3a 100644
       *
       * @return amount of no damage ticks
 diff --git a/src/main/java/org/bukkit/entity/Minecart.java b/src/main/java/org/bukkit/entity/Minecart.java
-index a7bb094..88b4fd5 100644
+index ea64114..904d84c 100644
 --- a/src/main/java/org/bukkit/entity/Minecart.java
 +++ b/src/main/java/org/bukkit/entity/Minecart.java
-@@ -8,14 +8,6 @@ import org.bukkit.util.Vector;
+@@ -10,16 +10,6 @@ import org.bukkit.util.Vector;
  public interface Minecart extends Vehicle {
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @param damage over 40 to "kill" a minecart
 -     */
 -    @Deprecated
 -    public void _INVALID_setDamage(int damage);
@@ -199,13 +222,15 @@ index a7bb094..88b4fd5 100644
       * Sets a minecart's damage.
       *
       * @param damage over 40 to "kill" a minecart
-@@ -23,14 +15,6 @@ public interface Minecart extends Vehicle {
+@@ -27,16 +17,6 @@ public interface Minecart extends Vehicle {
      public void setDamage(double damage);
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @return The damage
 -     */
 -    @Deprecated
 -    public int _INVALID_getDamage();
@@ -215,16 +240,18 @@ index a7bb094..88b4fd5 100644
       *
       * @return The damage
 diff --git a/src/main/java/org/bukkit/entity/Projectile.java b/src/main/java/org/bukkit/entity/Projectile.java
-index 90ce3b3..4ab2332 100644
+index a5599fa..4ab2332 100644
 --- a/src/main/java/org/bukkit/entity/Projectile.java
 +++ b/src/main/java/org/bukkit/entity/Projectile.java
-@@ -8,14 +8,6 @@ import org.bukkit.projectiles.ProjectileSource;
+@@ -8,16 +8,6 @@ import org.bukkit.projectiles.ProjectileSource;
  public interface Projectile extends Entity {
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @return the {@link LivingEntity} that shot this projectile
 -     */
 -    @Deprecated
 -    public LivingEntity _INVALID_getShooter();
@@ -233,13 +260,15 @@ index 90ce3b3..4ab2332 100644
       * Retrieve the shooter of this projectile.
       *
       * @return the {@link ProjectileSource} that shot this projectile
-@@ -23,14 +15,6 @@ public interface Projectile extends Entity {
+@@ -25,16 +15,6 @@ public interface Projectile extends Entity {
      public ProjectileSource getShooter();
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     *
+-     * @param shooter the {@link LivingEntity} that shot this projectile
 -     */
 -    @Deprecated
 -    public void _INVALID_setShooter(LivingEntity shooter);
@@ -249,16 +278,18 @@ index 90ce3b3..4ab2332 100644
       *
       * @param source the {@link ProjectileSource} that shot this projectile
 diff --git a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
-index 2cc0799..c11d41b 100644
+index 9ef48c8..5fa76ff 100644
 --- a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
-@@ -147,16 +147,6 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
+@@ -150,18 +150,6 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      }
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @return the (rounded) damage
 -     */
 -    @Deprecated
 -    public int _INVALID_getDamage() {
@@ -269,13 +300,15 @@ index 2cc0799..c11d41b 100644
       * Sets the raw amount of damage caused by the event.
       * <p>
       * For compatibility this also recalculates the modifiers and scales
-@@ -194,16 +184,6 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
+@@ -199,18 +187,6 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      }
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @param damage the new damage value
 -     */
 -    @Deprecated
 -    public void _INVALID_setDamage(int damage) {
@@ -287,16 +320,18 @@ index 2cc0799..c11d41b 100644
       *
       * @return A DamageCause value detailing the cause of the damage.
 diff --git a/src/main/java/org/bukkit/event/entity/EntityRegainHealthEvent.java b/src/main/java/org/bukkit/event/entity/EntityRegainHealthEvent.java
-index b4291b0..7ad5ca0 100644
+index a7b3517..e4e8ea4 100644
 --- a/src/main/java/org/bukkit/event/entity/EntityRegainHealthEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/EntityRegainHealthEvent.java
-@@ -35,16 +35,6 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable
+@@ -35,18 +35,6 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable
      }
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @return the (rounded) amount regained
 -     */
 -    @Deprecated
 -    public int _INVALID_getAmount() {
@@ -307,7 +342,7 @@ index b4291b0..7ad5ca0 100644
       * Sets the amount of regained health
       *
       * @param amount the amount of health the entity will regain
-@@ -53,16 +43,6 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable
+@@ -55,18 +43,6 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable
          this.amount = amount;
      }
  
@@ -315,26 +350,30 @@ index b4291b0..7ad5ca0 100644
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @param amount the amount that will be regained
 -     */
 -    @Deprecated
 -    public void _INVALID_setAmount(int amount) {
 -        setAmount(amount);
 -    }
 -
+     @Override
      public boolean isCancelled() {
          return cancelled;
-     }
 diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleDamageEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleDamageEvent.java
-index 304ee2c..acfa829 100644
+index c7b9c1a..acfa829 100644
 --- a/src/main/java/org/bukkit/event/vehicle/VehicleDamageEvent.java
 +++ b/src/main/java/org/bukkit/event/vehicle/VehicleDamageEvent.java
-@@ -45,16 +45,6 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
+@@ -45,18 +45,6 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
      }
  
      /**
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @return the damage
 -     */
 -    @Deprecated
 -    public int _INVALID_getDamage() {
@@ -345,7 +384,7 @@ index 304ee2c..acfa829 100644
       * Sets the damage done to the vehicle
       *
       * @param damage The damage
-@@ -63,16 +53,6 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
+@@ -65,18 +53,6 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
          this.damage = damage;
      }
  
@@ -353,6 +392,8 @@ index 304ee2c..acfa829 100644
 -     * This method exists for legacy reasons to provide backwards
 -     * compatibility. It will not exist at runtime and should not be used
 -     * under any circumstances.
+-     * 
+-     * @param damage the damage
 -     */
 -    @Deprecated
 -    public void _INVALID_setDamage(int damage) {
@@ -363,5 +404,5 @@ index 304ee2c..acfa829 100644
          return cancelled;
      }
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.0
 

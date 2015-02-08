@@ -1,11 +1,11 @@
-From 124258a752e46834732c7704993868cc7cd3b90c Mon Sep 17 00:00:00 2001
+From 3796de5082d6b6db3a5ac4365100371da254baf9 Mon Sep 17 00:00:00 2001
 From: Jedediah Smith <jedediah@silencegreys.com>
 Date: Fri, 9 May 2014 23:44:41 -0400
 Subject: [PATCH] Add API to disable potion particles
 
 
 diff --git a/src/main/java/org/bukkit/entity/LivingEntity.java b/src/main/java/org/bukkit/entity/LivingEntity.java
-index 6867b19..a822607 100644
+index b25ed61..9103882 100644
 --- a/src/main/java/org/bukkit/entity/LivingEntity.java
 +++ b/src/main/java/org/bukkit/entity/LivingEntity.java
 @@ -4,6 +4,7 @@ import java.util.Collection;
@@ -16,7 +16,7 @@ index 6867b19..a822607 100644
  import org.bukkit.Location;
  import org.bukkit.block.Block;
  import org.bukkit.inventory.EntityEquipment;
-@@ -272,6 +273,13 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
+@@ -276,6 +277,13 @@ public interface LivingEntity extends Entity, Damageable, ProjectileSource {
      public Collection<PotionEffect> getActivePotionEffects();
  
      /**
@@ -31,5 +31,5 @@ index 6867b19..a822607 100644
       * <p>
       * This uses the same algorithm that hostile mobs use to find the closest
 -- 
-1.8.5.1
+1.9.0
 

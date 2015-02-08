@@ -35,4 +35,4 @@ function rebuildPatches {
 }
 
 rebuildPatches Bukkit
-rebuildPatches CraftBukkit
+# rebuildPatches CraftBukkit

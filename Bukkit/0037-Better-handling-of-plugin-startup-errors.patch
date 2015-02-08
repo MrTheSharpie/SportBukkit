@@ -1,14 +1,14 @@
-From d5314653ec5ce517d417f092956729ea29211bf0 Mon Sep 17 00:00:00 2001
+From dad7b9d22b99c74abe867267748611f93891306d Mon Sep 17 00:00:00 2001
 From: Jedediah Smith <jedediah@silencegreys.com>
 Date: Tue, 9 Dec 2014 02:07:24 -0500
 Subject: [PATCH] Better handling of plugin startup errors
 
 
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index d75380c..07dcf0a 100644
+index a229d08..0db34ac 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-@@ -188,6 +188,19 @@ public class SimpleCommandMap implements CommandMap {
+@@ -148,6 +148,19 @@ public class SimpleCommandMap implements CommandMap {
          return true;
      }
  
@@ -64,10 +64,10 @@ index d2fe422..bd3dd79 100644
  
              HandlerList.bakeAll();
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPlugin.java b/src/main/java/org/bukkit/plugin/java/JavaPlugin.java
-index 19893f3..ea14ee7 100644
+index c961b18..12d797f 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPlugin.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPlugin.java
-@@ -309,13 +309,19 @@ public abstract class JavaPlugin extends PluginBase {
+@@ -314,13 +314,19 @@ public abstract class JavaPlugin extends PluginBase {
       * @param enabled true if enabled, otherwise false
       */
      protected final void setEnabled(final boolean enabled) {
@@ -93,10 +93,10 @@ index 19893f3..ea14ee7 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index 283de89..643272f 100644
+index a860442..893013c 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-@@ -320,14 +320,8 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -323,14 +323,8 @@ public final class JavaPluginLoader implements PluginLoader {
                  loaders.put(pluginName, (PluginClassLoader) jPlugin.getClassLoader());
              }
  
